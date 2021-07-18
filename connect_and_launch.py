@@ -28,7 +28,7 @@ options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
 options.add_argument("window-size=1920x1480")
 options.add_argument("disable-dev-shm-usage")
 
-driver = webdriver.Chrome(options=options, executable_path=ChromeDriverManager().install())
+driver = webdriver.Chrome(options=options, executable_path='/usr/lib/chromium-browser/chromedriver')
 
 
 async def start_server():
