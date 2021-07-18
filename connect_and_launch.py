@@ -114,6 +114,7 @@ def connect_account():
     """ Connects to the accounts through a headless chrome tab so we don't
         have to do it every time we want to start or stop the server."""
     driver.get(URL)
+    time.sleep(30)
     # login to aternos
     element = driver.find_element_by_id('user')
     element.send_keys(USER)
