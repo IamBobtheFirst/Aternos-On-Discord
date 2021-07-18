@@ -4,9 +4,6 @@ import os
 import logging
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import ElementNotInteractableException, \
                                        NoSuchElementException
@@ -118,9 +115,8 @@ def connect_account():
         have to do it every time we want to start or stop the server."""
     driver.get(URL)
     # login to aternos
-    element = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "user"))
-    )
+    element = driver.find_element_by_xpath('//*[@href="/lost/"]')    
+    element = driver.find_element_by_xpath('//*[@id="user"]')
     element.send_keys(USER)
     element = driver.find_element_by_xpath('//*[@id="password"]')
     element.send_keys(PASSWORD)
