@@ -4,15 +4,14 @@ import os
 import logging
 
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import ElementNotInteractableException, \
                                        NoSuchElementException
 from dotenv import load_dotenv
 from chromedriver_py import binary_path
 
 load_dotenv()
-USER = os.environ.get('USERNAME_C')
-PASSWORD = os.environ.get('PASSWORD_C')
+USER = os.getenv('USERNAME_C')
+PASSWORD = os.getenv('PASSWORD_C')
 URL = "https://aternos.org/go/"
 
 # chrome variables
@@ -22,13 +21,14 @@ headless = True  # if you want a headless window
 options = webdriver.ChromeOptions()
 if headless:
     options.add_argument('--headless')
+options.add_argument("window-size=1920x1480")
+options.add_argument("disable-dev-shm-usage")
+options.add_argument("--no-sandbox")
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                      "AppleWebKit/537.36 (KHTML, like Gecko) "
                      "Chrome/87.0.4280.88 Safari/537.36")
-options.add_argument("window-size=1920x1480")
-options.add_argument("disable-dev-shm-usage")
 
-driver = webdriver.Chrome(options=options, executable_path=ChromeDriverManager().install())
+driver = webdriver.Chrome(options=options, executable_path=binary_path)
 
 
 async def start_server():
@@ -115,19 +115,19 @@ def connect_account():
         have to do it every time we want to start or stop the server."""
     driver.get(URL)
     # login to aternos
-    element = driver.find_element_by_link_text('/lost/')   
     element = driver.find_element_by_xpath('//*[@id="user"]')
     element.send_keys(USER)
     element = driver.find_element_by_xpath('//*[@id="password"]')
     element.send_keys(PASSWORD)
     element = driver.find_element_by_xpath('//*[@id="login"]')
     element.click()
-    time.sleep(2)
+    time.sleep(3)
 
     # selects server from server list
-    element = driver.find_element_by_css_selector('body > div > main > section'
-                                                  '> div > div.servers.single '
-                                                  '> div > div.server-body')
+    # element = driver.find_element_by_css_selector('body > div > main > section'
+    #                                               '> div > div.servers.single '
+    #                                               '> div > div.server-body')
+    element = driver.find_element_by_class_name('server offline')
     element.click()
 
     # by passes the 3 second adblock
