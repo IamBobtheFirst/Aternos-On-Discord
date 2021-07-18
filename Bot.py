@@ -18,9 +18,9 @@ from embeds import server_info_embed, help_embed
 from selenium.common.exceptions import ElementNotInteractableException
 
 # setup environment vars if .env doesn't exist
-if not os.path.exists(os.path.relpath(".env")):
-    launch_config()
-    sys.exit()
+# if not os.path.exists(os.path.relpath(".env")):
+    # launch_config()
+    # sys.exit()
 
 # load environment vars
 load_dotenv()
