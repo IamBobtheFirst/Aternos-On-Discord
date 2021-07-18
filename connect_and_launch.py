@@ -4,6 +4,7 @@ import os
 import logging
 
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import ElementNotInteractableException, \
                                        NoSuchElementException
 from dotenv import load_dotenv
@@ -24,8 +25,10 @@ if headless:
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                      "AppleWebKit/537.36 (KHTML, like Gecko) "
                      "Chrome/87.0.4280.88 Safari/537.36")
+options.add_argument("window-size=1920x1480")
+options.add_argument("disable-dev-shm-usage")
 
-driver = webdriver.Chrome(options=options, executable_path=binary_path)
+driver = webdriver.Chrome(options=options, executable_path=ChromeDriverManager().install())
 
 
 async def start_server():
