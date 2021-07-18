@@ -4,6 +4,9 @@ import os
 import logging
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import ElementNotInteractableException, \
                                        NoSuchElementException
@@ -29,8 +32,6 @@ options.add_argument("window-size=1920x1480")
 options.add_argument("disable-dev-shm-usage")
 
 driver = webdriver.Chrome(options=options, executable_path=ChromeDriverManager().install())
-driver.maximize_window() # For maximizing window
-driver.implicitly_wait(20) # gives an implicit wait for 20 seconds
 
 
 async def start_server():
@@ -117,7 +118,9 @@ def connect_account():
         have to do it every time we want to start or stop the server."""
     driver.get(URL)
     # login to aternos
-    element = driver.find_element_by_id('user')
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "user"))
+    )
     element.send_keys(USER)
     element = driver.find_element_by_xpath('//*[@id="password"]')
     element.send_keys(PASSWORD)
