@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 from chromedriver_py import binary_path
 
 load_dotenv()
-USER = os.getenv('USERNAME_C')
-PASSWORD = os.getenv('PASSWORD_C')
+USER = os.environ.get('USERNAME_C')
+PASSWORD = os.environ.get('PASSWORD_C')
 URL = "https://aternos.org/go/"
 
 # chrome variables
