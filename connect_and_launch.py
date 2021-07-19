@@ -5,9 +5,11 @@ import logging
 
 from selenium import webdriver
 from selenium.common.exceptions import ElementNotInteractableException, \
-                                       NoSuchElementException
+                                       # NoSuchElementException
 from dotenv import load_dotenv
 from chromedriver_py import binary_path
+
+# from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 load_dotenv()
 USER = os.getenv('USERNAME_C')
@@ -16,7 +18,7 @@ URL = "https://aternos.org/go/"
 
 # chrome variables
 adblock = False  # for those with network wide ad blockers
-headless = True  # if you want a headless window
+headless = False  # if you want a headless window
 
 options = webdriver.ChromeOptions()
 if headless:
@@ -25,11 +27,15 @@ options.add_argument("window-size=1920x1480")
 options.add_argument("disable-dev-shm-usage")
 options.add_argument("--no-sandbox")
 options.add_argument("start-maximized")
-options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                     "AppleWebKit/537.36 (KHTML, like Gecko) "
-                     "Chrome/87.0.4280.88 Safari/537.36")
+options.add_argument('--disable-blink-features=AutomaticControlled')
+# options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                     # "AppleWebKit/537.36 (KHTML, like Gecko) "
+                     # "Chrome/87.0.4280.88 Safari/537.36")
+# options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36")
+options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 11.4; rv:90.0) Gecko/20100101 Firefox/90.0")
 
-driver = webdriver.Chrome(options=options, executable_path=binary_path)
+
+driver = webdriver.Chrome(options=options, expected_path=binary_path)
 
 
 async def start_server():
