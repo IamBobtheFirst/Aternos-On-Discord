@@ -5,7 +5,7 @@ import logging
 
 from selenium import webdriver
 from selenium.common.exceptions import ElementNotInteractableException, \
-                                       # NoSuchElementException
+                                       NoSuchElementException
 from dotenv import load_dotenv
 from chromedriver_py import binary_path
 
